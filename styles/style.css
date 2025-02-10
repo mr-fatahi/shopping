@@ -1,0 +1,123 @@
+@import url("./font.css");
+/* Reset */
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  text-decoration: none;
+}
+/* Root Variables */
+:root {
+  --color-text: #1e293b;
+  --color-gray: #d1d5db;
+  --color-light: #f0f8fb;
+  --color-black: #0f172a;
+  --color-white: #fff;
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 10px;
+}
+/* Typography */
+html {
+  font-size: 62.5%;
+}
+body {
+  font-size: 1.6rem;
+  font-weight: 500;
+  color: var(--color-text);
+}
+::placeholder {
+  font-size: 1.4rem;
+}
+h1,
+h2,
+h3 {
+  color: var(--color-black);
+}
+h1,
+h2 {
+  font-weight: 900;
+}
+h1 {
+  font-size: 3rem;
+}
+h2 {
+  font-size: 2.5rem;
+}
+h3 {
+  font-size: 2rem;
+  font-weight: 700;
+}
+a {
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+@media screen and (min-width: 768px) {
+  body {
+    font-size: 2rem;
+  }
+  ::placeholder {
+    font-size: 1.6rem;
+  }
+  h1 {
+    font-size: 5rem;
+  }
+  h2 {
+    font-size: 4.5rem;
+  }
+  h3 {
+    font-size: 3rem;
+  }
+}
+/* Controls */
+.btn {
+  cursor: pointer;
+  outline: 0;
+  border: 0;
+  font-size: 1.6rem;
+  font-weight: 600;
+  white-space: nowrap;
+  padding: 0.5rem 1.5rem;
+  border-radius: var(--radius-md);
+}
+.btn--block {
+  width: 100%;
+}
+.input {
+  background-color: transparent;
+  outline: 0;
+  border: 0;
+  padding: 0.7rem 1rem;
+  border-bottom: 2px solid var(--color-gray);
+}
+label {
+  display: block;
+  margin-bottom: 1rem;
+}
+@media screen and (min-width: 768px) {
+  .btn {
+    font-size: 1.8rem;
+  }
+}
+.badge {
+  cursor: pointer;
+  display: inline-block;
+  border-radius: var(--radius-lg);
+  padding: 0.5rem;
+  margin-left: 1rem;
+}
+/* Container and Block */
+.block {
+  padding: 1.5rem 2.5rem;
+}
+.container {
+  max-width: 1140px;
+  margin: 0 auto;
+}
+/* Hidden */
+.hidden {
+  display: none;
+}
