@@ -197,10 +197,23 @@ label {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  font-size: 1.3rem;
+  font-weight: 900;
+}
+.cart__info {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.cart__info button {
+  align-self: center;
 }
 @media screen and (min-width: 768px) {
   .carts {
     grid-template-columns: repeat(2, 1fr);
+  }
+  .cart__info button {
+    align-self: stretch;
   }
 }
 @media screen and (min-width: 1024px) {
