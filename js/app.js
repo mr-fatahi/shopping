@@ -54,17 +54,19 @@ const shoppingDB = [
     imageUrl: "/public/images/vida-s-two-3800.jpg",
   },
 ];
+let shoppingCarts = JSON.parse(localStorage.getItem("carts")) || [];
+const cartsNumber = document.querySelector(".number");
 const carts = document.querySelector(".carts");
 class Shopping {
   #db;
+  #result = "";
   constructor(_db) {
     this.#db = _db;
   }
   renderProducts() {
     this.#db.forEach((product) => {
-      const cart = document.createElement("section");
-      cart.classList.add("cart");
-      cart.innerHTML = `<figure class="cart__image">
+      this.#result += `<section class="cart">
+          <figure class="cart__image">
             <img
               src=${product.imageUrl}
               alt=${product.name}
@@ -73,14 +75,35 @@ class Shopping {
           <div class="cart__info block">
             <div class="cart__intro">
               <p>${product.name}</p>
-              <span><i>${product.price}</i> تومان</span>
+              <span>${product.price.toLocaleString()} تومان</span>
             </div>
-            <button class="btn bn--primary">افزودن به سبد خرید</button>
-          </div>`;
-      carts.append(cart);
+            <button data-id=${
+              product.id
+            } class="btn bn--primary add-to-carts">افزودن به سبد خرید</button>
+          </div>
+        </section>`;
     });
+    carts.innerHTML = this.#result;
+    const addToCartsBtns = [...document.querySelectorAll(".add-to-carts")];
+    addToCartsBtns.forEach((btn) =>
+      btn.addEventListener("click", (e) => {
+        const id = Number(e.target.dataset.id);
+        const product = this.#db.find(p => p.id === id);
+        this.#addToCarts(product);
+      })
+    );
+  }
+  #addToCarts(product){
+
+    shoppingCarts.push(product);
+    cartsNumber.textContent = shoppingCarts.length;
+    localStorage.setItem("carts", JSON.stringify(shoppingCarts));
   }
 }
 
-const shoppingApp = new Shopping(shoppingDB);
-document.addEventListener("DOMContentLoaded", shoppingApp.renderProducts());
+document.addEventListener("DOMContentLoaded", (e) => {
+  e.preventDefault();
+  cartsNumber.textContent = shoppingCarts.length;
+  const shoppingApp = new Shopping(shoppingDB);
+  shoppingApp.renderProducts();
+});

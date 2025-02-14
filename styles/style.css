@@ -21,7 +21,7 @@
   --radius-sm: 6px;
   --radius-md: 8px;
   --radius-lg: 10px;
-  --shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  --shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }
 /* Typography */
 html {
@@ -192,6 +192,8 @@ label {
 .cart__image > img {
   width: 100%;
   height: auto;
+  aspect-ratio: 16/12;
+  object-fit: cover;
 }
 .cart__intro {
   display: flex;
