@@ -14,7 +14,7 @@
   --color-primary: #7e22ce;
   --color-secondary: #e11d48;
   --color-text: #334155;
-  --color-gray: #d1d5db;
+  --color-gray: #9ca3af;
   --color-light: #f0f8fb;
   --color-black: #0f172a;
   --color-white: #fff;
@@ -221,5 +221,96 @@ label {
 @media screen and (min-width: 1024px) {
   .carts {
     grid-template-columns: repeat(3, 1fr);
+  }
+}
+/* Modal */
+.backdrop {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(1px);
+  z-index: 10;
+}
+.modal {
+  background-color: var(--color-white);
+  width: calc(100% - 8rem);
+  max-width: 650px;
+  max-height: calc(100vh - 4rem);
+  overflow-y: auto;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translateY(-50%) translateX(-50%);
+  border-radius: var(--radius-sm);
+  z-index: 3;
+}
+.modal__header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+.modal__body {
+  font-size: 1.2rem;
+}
+.modal__cart {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 5rem;
+  margin-bottom: 2rem;
+}
+.modal__cart__image {
+  width: 150px;
+  height: 100px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+.modal__cart__image > img {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 4/3;
+  object-fit: cover;
+}
+.modal__cart__info {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.modal__cart__info span {
+  color: var(--color-gray);
+}
+.modal__cart__numbers {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.fa-chevron-up {
+  cursor: pointer;
+  color: var(--color-primary);
+}
+.fa-chevron-down {
+  cursor: pointer;
+  color: var(--color-secondary);
+}
+.trash {
+  cursor: pointer;
+}
+.modal__footer {
+  font-size: 1.1rem;
+  font-weight: 700;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+}
+.modal__footer button {
+  font-size: 1.2rem;
+}
+@media screen and (min-width: 768px) {
+  .modal__body,
+  .modal__footer,
+  .modal__footer button {
+    font-size: 1.4rem;
   }
 }
