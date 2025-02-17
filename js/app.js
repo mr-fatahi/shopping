@@ -9,7 +9,9 @@ const modal = document.querySelector(".modal");
 document.addEventListener("DOMContentLoaded", () => {
   const productsData = new Products().getProducts();
   const ui = new UI();
+  ui.setupApp();
   ui.displayProducts(productsData);
+  ui.getAddBtns();
   Storage.saveProducts(productsData);
 });
 
