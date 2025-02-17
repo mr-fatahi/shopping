@@ -4,8 +4,10 @@ const productsDOM = document.querySelector(".carts");
 const cartItems = document.querySelector(".cart-items");
 const cartTotal = document.querySelector(".foot-price");
 const cartContent = document.querySelector(".modal__body");
+const clearCartBtn = document.querySelector(".clear-cart");
 
 let cart = [];
+let buttonsDOM = [];
 export class UI {
   displayProducts(products) {
     let result = "";
@@ -32,6 +34,7 @@ export class UI {
   }
   getAddBtns() {
     const addToCartBtns = [...document.querySelectorAll(".add-to-cart")];
+    buttonsDOM = addToCartBtns;
     addToCartBtns.forEach((btn) => {
       const id = Number(btn.dataset.id);
       const isInCart = cart.find((c) => c.id === id);
@@ -70,11 +73,13 @@ export class UI {
                 <span>${product.price.toLocaleString()} تومان</span>
               </div>
               <div class="modal__cart__numbers">
-                <i class="fa-solid fa-chevron-up"></i>
+                <i data-id=${product.id} class="fa-solid fa-chevron-up"></i>
                 <span>${product.qty}</span>
-                <i class="fa-solid fa-chevron-down"></i>
+                <i data-id=${product.id} class="fa-solid fa-chevron-down"></i>
               </div>
-              <span data-id="1" class="trash"><i class="fa-solid fa-trash-can"></i></span>`;
+              <i data-id=${
+                product.id
+              } class="fa-solid fa-trash-can remove-item"></i>`;
     cartContent.appendChild(div);
   }
   setupApp() {
@@ -84,5 +89,55 @@ export class UI {
   }
   populateCart(cart) {
     cart.forEach((item) => this.addCartItem(item));
+  }
+  cartLogic(cb) {
+    clearCartBtn.addEventListener("click", () => this.clearCart(cb));
+    cartContent.addEventListener("click", (e) => {
+      if (e.target.classList.contains("remove-item")) {
+        const trashIcon = e.target;
+        const id = Number(trashIcon.dataset.id);
+        cartContent.removeChild(trashIcon.parentElement);
+        this.removeItem(id);
+      } else if (e.target.classList.contains("fa-chevron-up")) {
+        const incIcon = e.target;
+        const id = Number(incIcon.dataset.id);
+        const addedItem = cart.find((item) => item.id === id);
+        addedItem.qty++;
+        Storage.saveCart(cart);
+        this.setCartValue(cart);
+        incIcon.nextElementSibling.innerText = addedItem.qty;
+      } else if (e.target.classList.contains("fa-chevron-down")) {
+        const decIcon = e.target;
+        const id = Number(decIcon.dataset.id);
+        const substractedItem = cart.find((item) => item.id === id);
+        if (substractedItem.qty === 1) {
+          this.removeItem(id);
+          cartContent.removeChild(decIcon.parentElement.parentElement);
+          return;
+        }
+        substractedItem.qty--;
+        Storage.saveCart(cart);
+        this.setCartValue(cart);
+        decIcon.previousElementSibling.innerText = substractedItem.qty;
+      }
+    });
+  }
+  clearCart(cb) {
+    cart.forEach((item) => this.removeItem(item.id));
+    while(cartContent.children.length){
+      cartContent.removeChild(cartContent.children[0]);
+    }
+    cb();
+  }
+  removeItem(id) {
+    cart = cart.filter((item) => item.id !== id);
+    this.setCartValue(cart);
+    Storage.saveCart(cart);
+    const button = this.getSingleButton(id);
+    button.innerText = "افزودن به سبد خرید";
+    button.disabled = false;
+  }
+  getSingleButton(id) {
+    return buttonsDOM.find((btn) => Number(btn.dataset.id) === id);
   }
 }

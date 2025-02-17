@@ -12,6 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
   ui.setupApp();
   ui.displayProducts(productsData);
   ui.getAddBtns();
+  ui.cartLogic(closeModal);
   Storage.saveProducts(productsData);
 });
 
